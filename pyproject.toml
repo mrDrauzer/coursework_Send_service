@@ -3,7 +3,7 @@ name = "coursework-send-service"
 version = "0.1.0"
 description = "Учебный проект"
 authors = ["Ваше Имя <you@example.com>"]
-readme = "README.md"
+readme = "README.txt"
 packages = []
 
 [tool.poetry.dependencies]
