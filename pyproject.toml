@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "coursework-send-service"
+version = "0.1.0"
+description = "Учебный проект"
+authors = ["Ваше Имя <you@example.com>"]
+readme = "README.md"
+packages = []
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4.0"
+django = "^4.2"
+python-dotenv = "^1.0.1"
+Pillow = "^11.0.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.6.5"
+flake8 = "^7.1.1"
+
+[build-system]
+requires = ["poetry-core>=1.8.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = []

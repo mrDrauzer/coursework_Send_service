@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Сервис рассылок{% endblock %}</title>
+    {% block head %}{% endblock %}
+</head>
+<body>
+<header>
+    <nav>
+        <a href="/">Главная</a>
+        {% if user.is_authenticated %}
+            | <a href="#">Получатели</a>
+            | <a href="#">Сообщения</a>
+            | <a href="#">Рассылки</a>
+            | <a href="#">Попытки</a>
+            | <a href="#">Профиль</a>
+            | <a href="#">Выход</a>
+        {% else %}
+            | <a href="#">Вход</a>
+            | <a href="#">Регистрация</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+    
+</main>
+
+<footer>
+    <small>&copy; {% now "Y" %} Сервис рассылок</small>
+    {% block footer %}{% endblock %}
+    
+</footer>
+</body>
+</html>
