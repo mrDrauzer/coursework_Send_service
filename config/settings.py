@@ -58,13 +58,28 @@ WSGI_APPLICATION = 'config.wsgi.application'
 ASGI_APPLICATION = 'config.asgi.application'
 
 
-# Database (use SQLite by default)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / os.getenv('SQLITE_NAME', 'db.sqlite3'),
+# Database
+# По умолчанию используем SQLite. Для PostgreSQL установите DB_ENGINE=postgres и задайте PG_* переменные.
+DB_ENGINE = os.getenv('DB_ENGINE', 'sqlite').lower()
+
+if DB_ENGINE in {"postgres", "postgresql", "psql"}:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('PG_NAME', 'postgres'),
+            'USER': os.getenv('PG_USER', 'postgres'),
+            'PASSWORD': os.getenv('PG_PASSWORD', ''),
+            'HOST': os.getenv('PG_HOST', '127.0.0.1'),
+            'PORT': os.getenv('PG_PORT', '5432'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / os.getenv('SQLITE_NAME', 'db.sqlite3'),
+        }
+    }
 
 
 AUTH_PASSWORD_VALIDATORS = [
