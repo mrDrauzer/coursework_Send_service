@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}Попытки рассылки #{{ mailing.id }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h4 mb-0">Попытки рассылки #{{ mailing.id }}</h1>
+  <div>
+    <a class="btn btn-outline-secondary me-2" href="{% url 'mailings:report_mailing_list' %}">К отчётам</a>
+    <a class="btn btn-outline-primary" href="{% url 'mailings:mailing_detail' mailing.pk %}">К рассылке</a>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><strong>Статус:</strong> {{ mailing.get_status_display }}</div>
+      <div class="col-md-3"><strong>Сообщение:</strong> {{ mailing.message.subject }}</div>
+      <div class="col-md-3"><strong>Старт:</strong> {{ mailing.start_at }}</div>
+      <div class="col-md-3"><strong>Финиш:</strong> {{ mailing.end_at }}</div>
+    </div>
+  </div>
+  </div>
+
+<div class="table-responsive">
+  <table class="table table-striped align-middle">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Когда</th>
+        <th>Статус</th>
+        <th>Ответ сервера</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for a in attempts %}
+      <tr>
+        <td>{{ forloop.counter0|add:page_obj.start_index|default:forloop.counter }}</td>
+        <td>{{ a.when }}</td>
+        <td>
+          {% if a.status == 'Успешно' %}
+            <span class="badge bg-success">{{ a.status }}</span>
+          {% else %}
+            <span class="badge bg-danger">{{ a.status }}</span>
+          {% endif %}
+        </td>
+        <td style="white-space: pre-wrap;">{{ a.server_response }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4" class="text-muted">Попыток пока нет.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if is_paginated %}
+  <nav aria-label="Пагинация">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Назад</a></li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Назад</span></li>
+      {% endif %}
+
+      <li class="page-item disabled"><span class="page-link">Стр. {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span></li>
+
+      {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперёд</a></li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Вперёд</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
+{% endblock %}

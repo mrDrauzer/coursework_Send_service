@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Отчёты по рассылкам{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h4 mb-0">Отчёты по рассылкам</h1>
+  <a class="btn btn-outline-secondary" href="{% url 'mailings:mailing_list' %}">К рассылкам</a>
+  </div>
+
+<div class="table-responsive">
+  <table class="table table-striped align-middle">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Статус</th>
+        <th>Сообщение</th>
+        <th>Получатели</th>
+        <th>Попыток</th>
+        <th>Успехов</th>
+        <th>Ошибок</th>
+        <th>Последняя попытка</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for m in items %}
+      <tr>
+        <td>{{ m.id }}</td>
+        <td>{{ m.get_status_display }}</td>
+        <td>{{ m.message.subject }}</td>
+        <td>{{ m.recipients.count }}</td>
+        <td>{{ m.attempts_total|default:0 }}</td>
+        <td class="text-success">{{ m.attempts_success|default:0 }}</td>
+        <td class="text-danger">{{ m.attempts_fail|default:0 }}</td>
+        <td>{{ m.last_attempt|default:'—' }}</td>
+        <td><a class="btn btn-sm btn-primary" href="{% url 'mailings:report_mailing_detail' m.pk %}">Детали</a></td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="9" class="text-muted">Пока нет рассылок или попыток.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+{% endblock %}

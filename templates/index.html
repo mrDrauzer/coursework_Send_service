@@ -3,8 +3,57 @@
 {% block title %}Главная — Сервис рассылок{% endblock %}
 
 {% block content %}
-    <h1>Сервис управления рассылками</h1>
-    <p>Добро пожаловать! Здесь будет отображаться статистика:
-        количество всех рассылок, активных и уникальных получателей.</p>
-    <p>Для продолжения авторизуйтесь или зарегистрируйтесь.</p>
+  <h1 class="mb-4">Сервис управления рассылками</h1>
+
+  <div class="row g-3 mb-4">
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="text-muted">Всего рассылок</div>
+              <div class="display-6">{{ total_mailings|default:0 }}</div>
+            </div>
+            <span class="badge bg-primary">All</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="text-muted">Активных сейчас</div>
+              <div class="display-6">{{ active_mailings|default:0 }}</div>
+            </div>
+            <span class="badge bg-success">Now</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="text-muted">Уникальных получателей</div>
+              <div class="display-6">{{ unique_recipients|default:0 }}</div>
+            </div>
+            <span class="badge bg-secondary">Recipients</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <a href="{% url 'mailings:mailing_list' %}" class="btn btn-primary me-2">К рассылкам</a>
+    <a href="{% url 'mailings:message_list' %}" class="btn btn-outline-primary me-2">К сообщениям</a>
+    <a href="{% url 'mailings:recipient_list' %}" class="btn btn-outline-primary">К получателям</a>
+  </div>
+
+  {% if not user.is_authenticated %}
+    <p class="text-muted">Для управления рассылками войдите или зарегистрируйтесь.</p>
+  {% endif %}
 {% endblock %}

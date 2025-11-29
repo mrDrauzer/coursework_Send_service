@@ -4,17 +4,20 @@ version = "0.1.0"
 description = "Учебный проект"
 authors = ["Ваше Имя <you@example.com>"]
 readme = "README.txt"
-packages = []
+package-mode = false
 
 [tool.poetry.dependencies]
-python = ">=3.8,<4.0"
-django = "^4.2"
+python = ">=3.12,<4.0"
+django = "^5.1"
 python-dotenv = "^1.0.1"
+# Современная Pillow (подходит для Python >=3.9)
 Pillow = "^11.0.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.6.5"
 flake8 = "^7.1.1"
+pytest = "^8.3.3"
+pytest-django = "^4.9.0"
 
 [tool.poetry.group.postgres]
 optional = true
@@ -28,7 +31,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
 line-length = 100
-target-version = "py38"
+target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "W"]

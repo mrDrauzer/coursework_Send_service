@@ -52,3 +52,15 @@ htmlcov/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# SQLite database (do not commit local DB)
+db.sqlite3
+*.sqlite3
+
+# Collected static and user uploads
+staticfiles/
+media/
+
+# Keep placeholder files in ignored dirs (to ensure directories exist in repo)
+!media/.gitkeep
+!media/avatars/.gitkeep
